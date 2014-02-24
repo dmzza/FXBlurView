@@ -1,7 +1,7 @@
 //
 //  FXBlurView.m
 //
-//  Version 1.5.1
+//  Version 1.5.3
 //
 //  Created by Nick Lockwood on 25/08/2013.
 //  Copyright (c) 2013 Charcoal Design
@@ -288,7 +288,7 @@
     if (!_blurEnabledSet) _blurEnabled = YES;
     if (!_tintBlendModeSet) _tintBlendMode = kCGBlendModePlusLighter;
     self.updateInterval = _updateInterval;
-    self.layer.magnificationFilter = @"linear"; //kCAFilterLinear;
+    self.layer.magnificationFilter = @"linear"; // kCAFilterLinear
     
     unsigned int numberOfMethods;
     Method *methods = class_copyMethodList([UIView class], &numberOfMethods);
@@ -452,14 +452,20 @@
         scale = 1.0f/floorf(1.0f/scale);
     }
     CGSize size = self.bounds.size;
-    if (self.contentMode == UIViewContentModeScaleToFill)
+    if (self.contentMode == UIViewContentModeScaleToFill ||
+        self.contentMode == UIViewContentModeScaleAspectFill ||
+        self.contentMode == UIViewContentModeScaleAspectFit ||
+        self.contentMode == UIViewContentModeRedraw)
     {
         //prevents edge artefacts
         size.width = floorf(size.width * scale) / scale;
         size.height = floorf(size.height * scale) / scale;
     }
-    size.width = floorf(size.width * scale) / scale;
-    size.height = floorf(size.height * scale) / scale;
+    else if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0f && [UIScreen mainScreen].scale == 1.0f)
+    {
+        //prevents pixelation on old devices
+        scale = 1.0f;
+    }
     UIGraphicsBeginImageContextWithOptions(size, YES, scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
 
