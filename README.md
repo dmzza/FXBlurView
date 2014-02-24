@@ -33,13 +33,18 @@ If you are using Interface Builder, to set the custom properties of FXBlurView (
 UIImage extensions
 --------------------
 
-FXBlurView extends UIImage with the following method:
+FXBlurView extends UIImage with the following methods:
 
     - (UIImage *)blurredImageWithRadius:(CGFloat)radius
                              iterations:(NSUInteger)iterations
                               tintColor:(UIColor *)tintColor;
 
-This method applies a blur effect and returns the resultant blurred image without modifying the original. The radius property controls the extent of the blur effect. The iterations property controls the number of iterations. More iterations means higher quality. The tintColor is an optional color that will be blended with the resultant image. Note that the alpha component of the tintColor is ignored.
+    - (UIImage *)blurredImageWithRadius:(CGFloat)radius
+                             iterations:(NSUInteger)iterations
+                              tintColor:(UIColor *)tintColor
+                          tintBlendMode:(CGBlendMode)tintBlendMode;
+
+These methods apply a blur effect and return the resultant blurred image without modifying the original. The radius property controls the extent of the blur effect. The iterations property controls the number of iterations. More iterations means higher quality. The tintColor is an optional color that will be blended with the resultant image. Note that the alpha component of the tintColor is ignored. The tintBlendMode is an optional blending method such as lighter or darker.
 
 
 FXBlurView methods

@@ -55,7 +55,7 @@
   return [self blurredImageWithRadius:radius iterations:iterations tintColor:tintColor tintBlendMode:kCGBlendModePlusLighter];
 }
 
-- (UIImage *)blurredImageWithRadius:(CGFloat)radius iterations:(NSUInteger)iterations tintColor:(UIColor *)tintColor tintBlendMode:(NSUInteger)tintBlendMode
+- (UIImage *)blurredImageWithRadius:(CGFloat)radius iterations:(NSUInteger)iterations tintColor:(UIColor *)tintColor tintBlendMode:(CGBlendMode)tintBlendMode
 {
     //image must be nonzero size
     if (floorf(self.size.width) * floorf(self.size.height) <= 0.0f) return self;
@@ -343,7 +343,7 @@
     [self setNeedsDisplay];
 }
 
-- (void)setTintBlendMode:(NSUInteger)tintBlendMode {
+- (void)setTintBlendMode:(CGBlendMode)tintBlendMode {
   _tintBlendModeSet = YES;
   if (_tintBlendMode != tintBlendMode) {
     _tintBlendMode = tintBlendMode;
